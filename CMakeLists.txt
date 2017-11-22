@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
-PROJECT(sioclient)
+PROJECT(WebRTC)
 
 if(NOT CMAKE_BUILD_TYPE )
 MESSAGE(STATUS "not define build type, set to release" )
@@ -17,12 +17,18 @@ find_package(Boost ${BOOST_VER} REQUIRED COMPONENTS system date_time random)
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/socket.io ALL_SRC)
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/socket.io/internal ALL_SRC)
 
-add_library(sioclient ${ALL_SRC})
-target_include_directories(sioclient PRIVATE ${Boost_INCLUDE_DIRS}
+add_library(socketio ${ALL_SRC})
+include_directories(${Boost_INCLUDE_DIRS}
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/socket.io
 )
 
+set_property(TARGET socketio PROPERTY CXX_STANDARD 11)
+set_property(TARGET socketio PROPERTY CXX_STANDARD_REQUIRED ON)
+target_link_libraries(socketio PRIVATE ${Boost_LIBRARIES})
+
+add_executable(sioclient src/socketio.cpp)
 set_property(TARGET sioclient PROPERTY CXX_STANDARD 11)
 set_property(TARGET sioclient PROPERTY CXX_STANDARD_REQUIRED ON)
-target_link_libraries(sioclient PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(sioclient socketio)
+target_link_libraries(sioclient pthread)
