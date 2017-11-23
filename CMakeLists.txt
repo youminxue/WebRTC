@@ -27,7 +27,7 @@ set_property(TARGET socketio PROPERTY CXX_STANDARD 11)
 set_property(TARGET socketio PROPERTY CXX_STANDARD_REQUIRED ON)
 target_link_libraries(socketio PRIVATE ${Boost_LIBRARIES})
 
-add_executable(sioclient src/socketio.cpp)
+add_executable(sioclient src/WebRTCSignal.cpp src/socketio.cpp)
 set_property(TARGET sioclient PROPERTY CXX_STANDARD 11)
 set_property(TARGET sioclient PROPERTY CXX_STANDARD_REQUIRED ON)
 target_link_libraries(sioclient socketio)
