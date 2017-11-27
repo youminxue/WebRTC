@@ -26,8 +26,11 @@ set_property(TARGET socketio PROPERTY CXX_STANDARD_REQUIRED ON)
 target_link_libraries(socketio PRIVATE ${Boost_LIBRARIES})
 
 add_subdirectory(sdl2)
+include_directories(
+  ${CMAKE_CURRENT_LIST_DIR}/sdl2/include
+)
 
 add_executable(WebRTC src/WebRTCSignal.cpp src/main.cpp)
 set_property(TARGET WebRTC PROPERTY CXX_STANDARD 11)
 set_property(TARGET WebRTC PROPERTY CXX_STANDARD_REQUIRED ON)
-target_link_libraries(WebRTC socketio pthread)
+target_link_libraries(WebRTC socketio pthread SDL2-static)
